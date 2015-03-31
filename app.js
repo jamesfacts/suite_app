@@ -9,3 +9,5 @@ for (var i = 0; i < n; i++) {
   y = next;
   console.log(x + y);
 }
+
+console.log("Fin");
