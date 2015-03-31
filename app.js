@@ -8,7 +8,7 @@ for (var i = 0; i < n; i++) {
   next = x + y;
   x = y;
   y = next;
-  console.log(x + y);
+  console.log('Fib ' + i + ': ' + next);
 }
 
 console.log("Fin");
