@@ -4,11 +4,12 @@ var num2 = 1;
 var nextNum;
 var totalNum = 10;
 
-for (var i = 0; i < nextNum; i++) {
-  next = num1 + num2;
+
+for (var i = 0; i < totalNum; i++) {
+  nextNum = num1 + num2;
   num1 = num2;
-  num2 = next;
-  console.log(num1 + num2);
+  num2 = nextNum;
+  console.log('Fib ' + i + ': ' + nextNum);
 }
 
 console.log("Fin");
