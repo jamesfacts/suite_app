@@ -5,7 +5,7 @@ var nextNum;
 var totalNum = 10;
 
 
-for (var i = 0; i < nextNum; i++) {
+for (var i = 0; i < totalNum; i++) {
   nextNum = num1 + num2;
   num1 = num2;
   num2 = nextNum;
