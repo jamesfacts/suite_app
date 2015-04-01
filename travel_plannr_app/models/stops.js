@@ -2,7 +2,7 @@
 module.exports = function(sequelize, DataTypes) {
   var stops = sequelize.define("stops", {
     name: DataTypes.STRING,
-    place_id: DataTypes.STRING,
+    g_stop_id: DataTypes.STRING,
     city_id: DataTypes.INTEGER
   }, {
 

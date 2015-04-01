@@ -11,7 +11,7 @@ module.exports = {
       name: {
         type: DataTypes.STRING
       },
-      place_id: {
+      g_stop_id: {
         type: DataTypes.STRING
       },
       city_id: {

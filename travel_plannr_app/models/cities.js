@@ -2,7 +2,7 @@
 module.exports = function(sequelize, DataTypes) {
   var cities = sequelize.define("cities", {
     name: DataTypes.STRING,
-    place_id: DataTypes.STRING
+    g_city_id: DataTypes.STRING
   }, {
 
     timestamps: false, 
