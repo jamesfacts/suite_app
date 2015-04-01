@@ -1,0 +1,19 @@
+{
+  "name": "travel_plannr_app",
+  "version": "1.0.0",
+  "description": "Travel Planner Web Application",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jamesfacts/suite_app.git"
+  },
+  "author": "Shomit Naik James Lewis James White",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jamesfacts/suite_app/issues"
+  },
+  "homepage": "https://github.com/jamesfacts/suite_app"
+}
