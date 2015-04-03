@@ -2,18 +2,28 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
-    <meta charset="utf-8">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.js"></script>
-  <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places&signed_in=true"></script>
-  
+  <title>Travel Plannr</title>
+
+
   <script src='bundle.js'></script>
   <script src='js/app.js'></script>
 
   <!--==========Views==========-->
   <script src ='js/views/mainview.js'></script>
   <script src='js/views/homepageview.js'></script>
+  <script type="text/javascript" src='js/views/cityitinerarylist.js'></script>
 
+	<!-- Models -->
+	<script src='js/models/city.js'></script>
+	<script src='js/models/itinerary.js'></script>
+	<script src='js/models/user.js'></script>
+
+	<!-- Collections -->
+	<script src='js/collections/cities.js'></script>
+	<script src='js/collections/itineraries.js'></script>
+	<script src='js/collections/users.js'></script>
+
+	<script type="text/javascript" src='js/collections/cityitinerarycollection.js'></script>
 
 </head>
 <body>
@@ -25,7 +35,10 @@
 
   <section id="city-detail-view"></section>
 
-  <section id="city-itinerary-view"></section>
+  <section id="city-itinerary-view">
+      <div id="itinerary-list">
+      </div>
+  </section>
 
   <template id= 'homepage-view-template'>
     <section id= "search form">
@@ -33,6 +46,12 @@
       <button id="search-button">Jet Set</button>
     </section>
   </template>   
+
+	<template id='single-itinerary-template'>
+		<div class= "itinerary" data-itinerary-id="{{itinerary_id}}">
+			<p class= "user-name">{{user_name}}</p>
+		</div>
+	</template>
 
 </body>
 </html>
