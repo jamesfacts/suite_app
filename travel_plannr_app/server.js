@@ -3,7 +3,25 @@ var application_root = __dirname,
     bodyParser       = require('body-parser'),
     path             = require('path'),
     logger           = require('morgan'),
-    models           = require('./models');
+    models           = require('./models'),
+    GooglePlaces		 = require('googleplaces');
+//    process.env			 = require('process.env');
+
+var GOOGLE_PLACES_API_KEY = "AIzaSyDTdWH_EerYdX8b0lI15YmQFAjEzthwEX4";
+var GOOGLE_PLACES_OUTPUT_FORMAT = "json";
+
+
+var googlePlaces = new GooglePlaces(GOOGLE_PLACES_API_KEY, 
+																		GOOGLE_PLACES_OUTPUT_FORMAT);
+
+
+
+var User 						 = models.users;
+var Itinerary				 = models.itineraries;
+var City 						 = models.cities;
+var Stop						 = models.stops;
+
+
 
 var app = express();
 
@@ -17,23 +35,20 @@ app.use( express.static( path.join( application_root, 'browser' )))
 
 // Export app as module
 
-var application_root 	= __dirname;
-var express 			= require('express');
-var logger 				= require('morgan');
-var bodyParser			= require('body-parser');
-var models 				= require('./models');
+// var application_root 	= __dirname;
+// var express 			= require('express');
+// var logger 				= require('morgan');
+// var bodyParser			= require('body-parser');
+// var models 				= require('./models');
 
-var User 				= models.users;
-var Itinerary			= models.itineraries;
-var City 				= models.cities;
-var Stop				= models.stops;
 
-var app = express();
 
-app.use(logger('dev'));
-app.use(bodyParser());
+// var app = express();
 
-app.use(express.static(__dirname + '/public'));
+// app.use(logger('dev'));
+// app.use(bodyParser());
+
+// app.use(express.static(__dirname + '/public'));
 
 module.exports = app;
 
@@ -261,3 +276,65 @@ app.delete('/stops/:id', function(req, res) {
 				});
 		});
 });
+
+
+app.get('/city-info/:placeid', function (req, res) {
+
+	var idParameters = {
+	  placeid: req.params.placeid
+	};
+
+	var data = {};
+
+	googlePlaces.placeDetailsRequest(idParameters, function (error, response) {
+	  if (error) throw error;
+	  
+	  console.log("//////////////////////////////");
+	  console.log(response);
+	  console.log("//////////////////////////////");
+
+	  data.name = response.result.formatted_address;
+	  data.location = { location: [response.result.geometry.location.lat,
+	  						                 response.result.geometry.location.lng] };
+
+	  googlePlaces.placeSearch(data.location, function (error, response) {
+		  if (error) throw error;
+
+		  data.attractions = [];
+
+		  response.results.forEach(function (result) {
+
+			  												var attraction = {
+			  													name: result.name,
+			  													g_place_id: result.place_id,
+			  													type: result.types[0],
+			  													location: result.geometry
+			  												};
+
+			  												data.attractions.push(attraction);
+
+		  												});
+
+
+
+		  res.send(data);
+		})
+	  	
+
+		});
+
+
+
+});
+
+
+
+
+
+
+
+
+
+
+
+
