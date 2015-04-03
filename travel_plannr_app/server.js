@@ -3,6 +3,7 @@ var application_root = __dirname,
     bodyParser       = require('body-parser'),
     path             = require('path'),
     logger           = require('morgan'),
+    request          = require('request'), // STILL NEED TO ADD REQUEST NPM!!
     models           = require('./models');
 
 var app = express();
@@ -17,23 +18,23 @@ app.use( express.static( path.join( application_root, 'browser' )))
 
 // Export app as module
 
-var application_root 	= __dirname;
-var express 			= require('express');
-var logger 				= require('morgan');
-var bodyParser			= require('body-parser');
-var models 				= require('./models');
+// var application_root 	= __dirname;
+// var express 			    = require('express');
+// var logger 				    = require('morgan');
+// var bodyParser		    = require('body-parser');
+// var models 				    = require('./models');
 
-var User 				= models.users;
-var Itinerary			= models.itineraries;
-var City 				= models.cities;
-var Stop				= models.stops;
+var User 				      = models.users;
+var Itinerary		      = models.itineraries;
+var City 				      = models.cities;
+var Stop				      = models.stops;
 
-var app = express();
+// var app = express();
 
-app.use(logger('dev'));
-app.use(bodyParser());
+// app.use(logger('dev'));
+// app.use(bodyParser());
 
-app.use(express.static(__dirname + '/public'));
+// app.use(express.static(__dirname + '/public'));
 
 module.exports = app;
 
@@ -160,6 +161,22 @@ app.get('/cities', function(req, res) {
 		.then(function(cities) {
 			res.send(cities);
 		});
+});
+
+app.get('/return_place_id/:place_text', function(req, res) {
+
+// get request to google places API for place_id
+var placeIdRoot = 'https://maps.googleapis.com/maps/api/place/textsearch/json?query=';
+var cityName = encodeURI(req.params.place_text);
+var apiKey = '&key=AIzaSyC3PCTnrbjuCd09u1g3wABbNFW19JaPgyU';
+
+var queryUrl = placeIdRoot + cityName + apiKey;
+	request.get(queryUrl, function (error, response, body) {
+		if (!error && response.statusCode == 200) {
+			var data = JSON.parse(response.body);
+			res.send({place_id: data.results[0].place_id});
+		}
+	});
 });
 
 //show

@@ -9,16 +9,33 @@ App.Views.MainView = Backbone.View.extend({
 		console.log('Main View has been created');
 	},
 
-	showDetailPage: function() {
-		if (App.CityDetailView != undefined) {
-			$(App.CityDetailView.el).show();
-		}
+	events: {
+		'click #search-button': 'hideAndShowView',
 	},
 
-	showItineraryPage: function()	{
-		if (App.CityItineraryView != undefined) {
-			$(App.CityItineraryView.el).show();
-		}
-	}
+	hideAndShowView: function() {
+		$.ajax({
+			url: '/return_place_id/:place_text',
+			method: 'GET',
+			dataType: 'json'
+		}).done(function(placeid) {
+			App.detail = new App.CityDetailView(placeid); // should show detail
+			App.itinerary = new App.CityItineraryView(placeid); // should show itinerary
+		  var homepage = new App.Views.HomePageView;
+				homepage.hide(placeid);
+		});
+	},
+
+	// showDetailPage: function() {
+	// 	if (App.Views.CityDetailView != undefined) {
+	// 		$(App.Views.CityDetailView.el).show();
+	// 	}
+	// },
+
+	// showItineraryPage: function()	{
+	// 	if (App.Views.CityItineraryView != undefined) {
+	// 		$(App.Views.CityItineraryView.el).show();
+	// 	}
+	// }
 
 });
