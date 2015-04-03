@@ -4,24 +4,19 @@ var application_root = __dirname,
     path             = require('path'),
     logger           = require('morgan'),
     models           = require('./models'),
+    request          = require('request'),
     GooglePlaces		 = require('googleplaces');
-//    process.env			 = require('process.env');
 
 var GOOGLE_PLACES_API_KEY = "AIzaSyDTdWH_EerYdX8b0lI15YmQFAjEzthwEX4";
 var GOOGLE_PLACES_OUTPUT_FORMAT = "json";
 
-
 var googlePlaces = new GooglePlaces(GOOGLE_PLACES_API_KEY, 
 																		GOOGLE_PLACES_OUTPUT_FORMAT);
-
-
 
 var User 						 = models.users;
 var Itinerary				 = models.itineraries;
 var City 						 = models.cities;
 var Stop						 = models.stops;
-
-
 
 var app = express();
 
@@ -31,24 +26,7 @@ app.use( bodyParser() );
 app.use( express.static( path.join( application_root, 'public' )))
 app.use( express.static( path.join( application_root, 'browser' )))
 
-// Routes
-
 // Export app as module
-
-// var application_root 	= __dirname;
-// var express 			= require('express');
-// var logger 				= require('morgan');
-// var bodyParser			= require('body-parser');
-// var models 				= require('./models');
-
-
-
-// var app = express();
-
-// app.use(logger('dev'));
-// app.use(bodyParser());
-
-// app.use(express.static(__dirname + '/public'));
 
 module.exports = app;
 
@@ -175,6 +153,22 @@ app.get('/cities', function(req, res) {
 		.then(function(cities) {
 			res.send(cities);
 		});
+});
+
+app.get('/return_place_id/:place_text', function(req, res) {
+
+// get request to google places API for place_id
+var placeIdRoot = 'https://maps.googleapis.com/maps/api/place/textsearch/json?query=';
+var cityName = encodeURI(req.params.place_text);
+var apiKey = '&key=AIzaSyC3PCTnrbjuCd09u1g3wABbNFW19JaPgyU';
+
+var queryUrl = placeIdRoot + cityName + apiKey;
+	request.get(queryUrl, function (error, response, body) {
+		if (!error && response.statusCode == 200) {
+			var data = JSON.parse(response.body);
+			res.send({place_id: data.results[0].place_id});
+		}
+	});
 });
 
 //show
