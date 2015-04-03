@@ -6,7 +6,8 @@
 App.Views.CityDetail = Backbone.View.extend({
 	el: '#city-detail',
 
-	place_id: 'ChIJ674hC6Y_WBQRujtC6Jay33k',
+	model: App.cities.findWhere( //doesn't like findWhere
+                     {g_city_id: App.currentCity}),
 
 	// model: App.cityDetail,
 
@@ -21,6 +22,14 @@ App.Views.CityDetail = Backbone.View.extend({
 	},
 
 	render: function () {
+
+	},
+
+	show: function() {
+
+	},
+
+	hide: function() {
 
 	}
 
