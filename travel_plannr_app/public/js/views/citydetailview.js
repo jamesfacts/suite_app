@@ -4,23 +4,25 @@
 // needed.
 
 App.Views.CityDetail = Backbone.View.extend({
-	el: '#city-detail',
+	el: '#city-detail-view',
 
-	place_id: 'ChIJ674hC6Y_WBQRujtC6Jay33k',
-
-	// model: App.cityDetail,
+	model: App.cities.findWhere( 
+ 					{g_city_id: App.currentCity}),
 
 	initialize: function () {
-		// will need to set a template eventually
-		this.listenTo(this.model, 'change', this.render);
-	},
-
-	setDetails: function () {
-		this.model = new App.cityDetail({ place_id: this.place_id });
-
+		this.template = Handlebars.compile($())
+		this.render();
 	},
 
 	render: function () {
+
+	},
+
+	show: function () {
+
+	},
+
+	hide: function () {
 
 	}
 

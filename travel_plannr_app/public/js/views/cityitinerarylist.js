@@ -18,6 +18,9 @@ App.Views.CityItineraryList = Backbone.View.extend({
 	// main view will pass in a 'place_id'
 	el: '#itinerary-list',
 
+	model: App.cities.findWhere( 
+ 					{g_city_id: App.currentCity}),
+
 	initialize: function(){
 		// first, generate a new collection
 		this.collection = new App.Collections.CityItineraryCollection();

@@ -47,11 +47,25 @@
 
 
   <template id= 'homepage-view-template'>
-    <section id= "search form">
+    <div id= "search form">
       <input type="text" id="search-input" placeholder="Please Enter a City">
       <button id="search-button">Jet Set</button>
-    </section>
+    </div>
   </template>   
+
+  <template id='city-detail-template'>
+  	<div id='city-detail-container'>
+  		<h2>Your city: {{name}}</h2>
+  		<iframe
+			  width="450"
+			  height="450"
+			  frameborder="0" style="border:0"
+			  src="https://www.google.com/maps/embed/v1/place?key=AIzaSyDTdWH_EerYdX8b0lI15YmQFAjEzthwEX4
+			    &q={{name}}">
+			</iframe>
+			<!--<h4>Attractions:</h4>-->
+  	</div>
+  </template>
 
 
 	<template id='single-itinerary-template'>

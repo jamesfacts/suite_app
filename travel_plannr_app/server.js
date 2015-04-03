@@ -274,18 +274,13 @@ app.delete('/stops/:id', function(req, res) {
 
 app.get('/city-info/:placeid', function (req, res) {
 
-	var idParameters = {
-	  placeid: req.params.placeid
-	};
+	var idParameters = { placeid: req.params.placeid };
 
 	var data = {};
+	data.attractions = [];
 
 	googlePlaces.placeDetailsRequest(idParameters, function (error, response) {
 	  if (error) throw error;
-	  
-	  console.log("//////////////////////////////");
-	  console.log(response);
-	  console.log("//////////////////////////////");
 
 	  data.name = response.result.formatted_address;
 	  data.location = { location: [response.result.geometry.location.lat,
@@ -294,10 +289,7 @@ app.get('/city-info/:placeid', function (req, res) {
 	  googlePlaces.placeSearch(data.location, function (error, response) {
 		  if (error) throw error;
 
-		  data.attractions = [];
-
 		  response.results.forEach(function (result) {
-
 			  												var attraction = {
 			  													name: result.name,
 			  													g_place_id: result.place_id,
@@ -306,18 +298,11 @@ app.get('/city-info/:placeid', function (req, res) {
 			  												};
 
 			  												data.attractions.push(attraction);
-
 		  												});
-
-
-
 		  res.send(data);
 		})
-	  	
-
+	 
 		});
-
-
 
 });
 
