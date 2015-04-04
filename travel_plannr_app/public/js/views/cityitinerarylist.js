@@ -25,7 +25,7 @@ App.Views.CityItineraryList = Backbone.View.extend({
 		// first, generate a new collection
 		this.collection = new App.Collections.CityItineraryCollection();
 		this.singleItineraryTemplate = Handlebars.compile( $('#single-itinerary-template').html() );
-		this.listenTo(this.collection, 'add', this.render);
+		this.listenTo(this.collection, 'reset', this.render);
 	},
 
 
@@ -38,29 +38,27 @@ App.Views.CityItineraryList = Backbone.View.extend({
 		var itinerariesInstance = App.itineraries.where({ city_id: cityKey });
 
 		// reset
-		this.collection.reset();
-
-		// iterate over the array of itinerary models, add to our collection
-		itinerariesInstance.forEach( function (singleItinerary) {
-			App.cityItineraryList.collection.create(singleItinerary)
-		});
+		this.collection.reset(itinerariesInstance);
 
 	},
 
-	render: function(singleItinerary) {
-		console.log("City-Itinerary Renderedddd");
+	render: function() {
 
-		var userId = singleItinerary.attributes.user_id;
-		var singleUser = App.users.findWhere({ id: userId });
+		this.collection.forEach( function(singleItinerary) {
 
-		var dataToRender = {
-			user_name : singleUser.attributes.name,
-			itinerary_id : singleItinerary.attributes.id
-		};
+			var userId = singleItinerary.attributes.user_id;
+			var singleUser = App.users.findWhere({ id: userId });
 
-		// Handlbars template should publically display 'user_name'
-		// and set the 'itinerary_id' to a data value	
-		this.$el.append(this.singleItineraryTemplate(dataToRender));
+			var dataToRender = {
+				user_name : singleUser.attributes.name,
+				itinerary_id : singleItinerary.attributes.id
+			};
+
+			// Handlbars template should publically display 'user_name'
+			// and set the 'itinerary_id' to a data value	
+			this.$el.append(this.singleItineraryTemplate(dataToRender));
+
+		}.bind(this))
 	},
 
 	show: function() {
@@ -68,7 +66,7 @@ App.Views.CityItineraryList = Backbone.View.extend({
 	},
 
 	hide: function() {
-		
+
 	}
 });
 

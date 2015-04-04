@@ -7,7 +7,7 @@ var application_root = __dirname,
     request          = require('request'),
     GooglePlaces		 = require('googleplaces');
 
-var GOOGLE_PLACES_API_KEY = "AIzaSyDTdWH_EerYdX8b0lI15YmQFAjEzthwEX4";
+var GOOGLE_PLACES_API_KEY = "";
 var GOOGLE_PLACES_OUTPUT_FORMAT = "json";
 
 var googlePlaces = new GooglePlaces(GOOGLE_PLACES_API_KEY, 
@@ -160,7 +160,7 @@ app.get('/return_place_id/:place_text', function(req, res) {
 // get request to google places API for place_id
 var placeIdRoot = 'https://maps.googleapis.com/maps/api/place/textsearch/json?query=';
 var cityName = encodeURI(req.params.place_text);
-var apiKey = '&key=AIzaSyC3PCTnrbjuCd09u1g3wABbNFW19JaPgyU';
+var apiKey = '&key=';
 
 var queryUrl = placeIdRoot + cityName + apiKey;
 	request.get(queryUrl, function (error, response, body) {
