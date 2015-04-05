@@ -6,7 +6,6 @@ App.Views.HomepageView = Backbone.View.extend({
   el: '#homepage-view',
 
 	initialize: function() {
-		console.log('Home Page View has been created');
 		this.homepageTemplate = Handlebars.compile($('#homepage-view-template').html());
 		this.render();
 	},
@@ -20,6 +19,6 @@ App.Views.HomepageView = Backbone.View.extend({
 	},
 
 	show: function() {
-		this.$el.show()
+		this.$el.show();
 	}
 });

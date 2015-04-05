@@ -8,12 +8,13 @@ var App = {
 $(function() {
 	console.log('Loaded, bro.');
 
+	// ============ collections ============
 	App.cities = new App.Collections.CitiesCollection();
   App.itineraries = new App.Collections.ItinerariesCollection();
   App.users = new App.Collections.UsersCollection();
-  App.homepage = new App.Views.HomepageView();
-  App.citydetail = new App.Views.CityDetail(); //friday afternoon
-  App.cityitinerary = new App.Views.CityItineraryList(); //friday afternoon
+
+  // ============ main view ============
+  App.mainView = new App.Views.MainView();
 
   // Async issue
 

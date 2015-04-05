@@ -10,20 +10,20 @@ App.Views.MainView = Backbone.View.extend({
 	el: '#main-view',
 
 	initialize: function() {
-		console.log('Main View has been created');
-		this.home = new App.homepage(); //friday afternoon
-		this.detailView = new App.citydetail(); //friday afternoon
-		this.cityItinerary = new App.cityitinerary(); //friday afternoon
-	},
-
-	render: function() { //friday afternoon
-		this.$el.empty();
-		this.$el.append(this.home.$el);
-		this.home.render();
+		App.homepage = new App.Views.HomepageView();
 	},
 
 	events: {
 		'click #search-button': 'executeSearch',
+		'click #logo'					: 'showHome',
+		'click .user-name'		: 'itineraryView',
+		'click #back'					: 'allItineraries'
+	},
+
+	showHome: function() { 
+		App.cityDetailView.hide();
+		App.cityItineraryView.hide();
+		App.homepage.show();
 	},
 
   executeSearch: function() {
@@ -34,27 +34,53 @@ App.Views.MainView = Backbone.View.extend({
           method: 'GET',
           dataType: 'json'
       }).done(function(placeid) {
-          App.currentCity = placeid;
+          App.currentCity = placeid.place_id;
+
           App.homepage.hide();
 
-          App.detail = new App.CityDetailView(); // should show detail
-          App.itinerariesInCity = new App.CityItineraryView(); // should show itinerary
-      		
-      		App.detail.show()
-      		App.itinerariesInCity.show()
+          App.cityDetailView = new App.Views.CityDetailView(); 
+
+          App.cityItineraryView = new App.Views.CityItineraryView();
+      		App.cityItineraryView.getCity();
+
+      		App.cityDetailView.show();
+
       		});
+  },
+
+  allItineraries: function () {
+  	alert('yo');
+  	App.individualItineraryView.hide();
+  	App.cityItineraryView.show();
+  },
+
+  itineraryView: function(userClicked) {
+  	App.clickedItineraryId = parseInt(userClicked.target.closest('li').dataset.itineraryId);
+  	App.clickedItineraryUser = userClicked.target.innerHTML;
+
+  	App.cityItineraryView.hide();
+  	App.individualItineraryView = new App.Views.IndividualItineraryView();
+  	App.individualItineraryView.getItinerary();
+
   }
 
-	// showDetailPage: function() {
-	// 	if (App.Views.CityDetailView != undefined) {
-	// 		$(App.Views.CityDetailView.el).show();
-	// 	}
-	// },
-
-	// showItineraryPage: function()	{
-	// 	if (App.Views.CityItineraryView != undefined) {
-	// 		$(App.Views.CityItineraryView.el).show();
-	// 	}
-	// }
-
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

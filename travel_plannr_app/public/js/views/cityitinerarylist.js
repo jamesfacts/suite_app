@@ -4,70 +4,61 @@
 // rendered as only a name (the name of the user who created them) and an invisible 
 // data attribute that contains the itinerary_id.
 
-// This takes place in the main view:
+App.Views.CityItineraryView = Backbone.View.extend({
 
-// var id = jimmyfunction(userInput);
-// App.homepage.hide()
-
-// App.cityItineraryList = new App.Views.CityItineraryList(id); id is an object
-// App.cityDetailView = new App.Views.CityDetailView(id); 
-
-
-App.Views.CityItineraryList = Backbone.View.extend({
-
-	// main view will pass in a 'place_id'
-	el: '#itinerary-list',
-
-	model: App.cities.findWhere( 
- 					{g_city_id: App.currentCity}),
-
+	el: '#city-itinerary-view',
 
 	initialize: function(){
-		// first, generate a new collection
 		this.collection = new App.Collections.CityItineraryCollection();
-		this.singleItineraryTemplate = Handlebars.compile( $('#single-itinerary-template').html() );
+
+		this.template = Handlebars.compile( $('#city-itinerary-template').html() );
 		this.listenTo(this.collection, 'reset', this.render);
+
 	},
 
+	getCity: function () {
+		var cityKey = App.cities.findWhere({g_city_id: App.currentCity});
+		this.getItineraries(cityKey);
+	},
 
-	fillItineraries: function() {
-
-		// this is the single city that has the specified place id
-		var cityKey = this.model.id;
-
+	getItineraries: function (cityKey) {
 		// this is an array of itinerary models with the specified city id
-		var itinerariesInstance = App.itineraries.where({ city_id: cityKey });
+		var itineraries = App.itineraries.where({ city_id: cityKey.id });
 
-		// reset
-		this.collection.reset(itinerariesInstance);
-
+		this.getUsers(itineraries);
 	},
 
-	render: function() {
+	getUsers: function (itineraries) {
 
-		this.collection.forEach( function(singleItinerary) {
+		var itineraryItems = [];
 
+		itineraries.forEach( function(singleItinerary) {
 			var userId = singleItinerary.attributes.user_id;
 			var singleUser = App.users.findWhere({ id: userId });
 
 			var dataToRender = {
 				user_name : singleUser.attributes.name,
 				itinerary_id : singleItinerary.attributes.id
-			};
+			}
+			itineraryItems.push(dataToRender);
+		});
 
-			// Handlbars template should publically display 'user_name'
-			// and set the 'itinerary_id' to a data value	
-			this.$el.append(this.singleItineraryTemplate(dataToRender));
+		this.collection.reset(itineraryItems);
+	},
 
-		}.bind(this))
+	render: function() {
+		// **** WHY?!?!?! WHY?!?!?!?!?!?!?!?!
+
+		var renderData = {itinerary: this.collection.models};
+		this.$el.html(this.template( renderData ));
 	},
 
 	show: function() {
-
+		this.$el.show();
 	},
 
 	hide: function() {
-
+		this.$el.hide();
 	}
 });
 

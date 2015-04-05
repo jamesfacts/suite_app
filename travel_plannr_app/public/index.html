@@ -12,42 +12,48 @@
   <script src='js/views/homepageview.js'></script>
   <script src='js/views/cityitinerarylist.js'></script>
   <script src="js/views/citydetailview.js"></script>
+  <script src="js/views/individualitineraryview.js"></script>
+
 
 	<!-- Models -->
 	<script src='js/models/city.js'></script>
 	<script src='js/models/itinerary.js'></script>
 	<script src='js/models/user.js'></script>
+	<script src='js/models/stop.js'></script>
 
 	<!-- Collections -->
 	<script src='js/collections/cities.js'></script>
 	<script src='js/collections/itineraries.js'></script>
 	<script src='js/collections/users.js'></script>
 	<script src='js/collections/cityitinerarycollection.js'></script>
+	<script src='js/collections/individualitinerarycollection.js'></script>
+
+	<!-- Google Fonts -->
+	<link href='http://fonts.googleapis.com/css?family=Damion' rel='stylesheet' type='text/css'>
+
+	<!-- Custom Styles -->
+	<link rel="stylesheet" type="text/css" href="css/style.css">
 
 </head>
 <body>
-  <h1>Travel Plannr</h1>
-
+  
   <div id="main-view">
+  	<a href="#"><h1 id="logo">Travel Plannr</h1></a>
 
 	  <div id="homepage-view"></div>
 
 	  <section id="city-detail-view">
-	  	<div id="city-detail">
-			</div>
 	  </section>
 
 	  <section id="city-itinerary-view">
-	     <div id="itinerary-list">
-	     </div>
 	  </section>
 
 	</div>
 
 
 
-  <template id= 'homepage-view-template'>
-    <div id= "search form">
+  <template id='homepage-view-template'>
+    <div id='search-form'>
       <input type="text" id="search-input" placeholder="Please Enter a City">
       <button id="search-button">Jet Set</button>
     </div>
@@ -55,24 +61,57 @@
 
   <template id='city-detail-template'>
   	<div id='city-detail-container'>
-  		<h2>Your city: {{name}}</h2>
+  		<h2>Your city:</h2> 
+  		<h4>{{name}}</h4>
   		<iframe
-			  width="450"
-			  height="450"
+			  width="400"
+			  height="400"
+			  margin-left="auto"
+			  margin-right="auto"
 			  frameborder="0" style="border:0"
 			  src="https://www.google.com/maps/embed/v1/place?key=AIzaSyDTdWH_EerYdX8b0lI15YmQFAjEzthwEX4
 			    &q={{name}}">
 			</iframe>
-			<!--<h4>Attractions:</h4>-->
+			<h4>Attractions:</h4>
+			<ul>
+				{{#each attractions}}
+			  <li data-g-id='{{g_place_id}}'>
+			  	<a href="#"><span class='attraction-name'>{{name}}</span></a>
+			  	<a href="#"><span class='attraction-type'>{{type}}</span></a>
+			  </li>
+			  {{/each}}
+			</ul>
   	</div>
   </template>
 
+  <template id='city-itinerary-template'>
+  	<div id='city-itinerary-container'>
+  		<h2>View An Itinerary:</h2> 
+	  		<ul class="itinerary-items">
+					{{#each itinerary}}
+				  <li data-itinerary-id='{{attributes.itinerary_id}}'>
+						<a href="#"><span class='user-name'>{{attributes.user_name}}</span></a>
+				  </li>
+				  {{/each}}
+				</ul>
+  	</div>
+  </template>
 
-	<template id='single-itinerary-template'>
-		<div class= "itinerary" data-itinerary-id="{{itinerary_id}}">
-			<p class= "user-name">{{user_name}}</p>
-		</div>
-	</template>
+  <template id='user-itinerary-template'>
+  	<div id='user-itinerary-container'>
+  		<h2> {{userName}}'s Itinerary:</h2> 
+	  		<ul class="itinerary-stops">
+					{{#each stop}}
+				  <li data-g-stop-id='{{g_stop_id}}'>
+						<a href="#"><span class='stop-name'>{{name}}</span></a>
+				  </li>
+				  {{/each}}
+				</ul>
+				<button id='edit'>Edit Itinerary</button>
+				<button id='back'>Return To All Itineraries</button>
+  	</div>
+  </template>
+
 
 </body>
 </html>
