@@ -21,6 +21,7 @@ App.Views.CityItineraryList = Backbone.View.extend({
 	model: App.cities.findWhere( 
  					{g_city_id: App.currentCity}),
 
+
 	initialize: function(){
 		// first, generate a new collection
 		this.collection = new App.Collections.CityItineraryCollection();
@@ -59,8 +60,13 @@ App.Views.CityItineraryList = Backbone.View.extend({
 			this.$el.append(this.singleItineraryTemplate(dataToRender));
 
 		}.bind(this))
+	},
 
-		debugger;
+	show: function() {
+
+	},
+
+	hide: function() {
 
 	}
 });

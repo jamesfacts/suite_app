@@ -24,6 +24,14 @@ App.Views.CityDetail = Backbone.View.extend({
 
 	hide: function () {
 
+	},
+
+	show: function() {
+
+	},
+
+	hide: function() {
+
 	}
 
 

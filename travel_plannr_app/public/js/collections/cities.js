@@ -8,16 +8,16 @@ App.Collections.CitiesCollection = Backbone.Collection.extend({
 
 		this.fetch({
 			success: this.fetchSuccess,
-			error: this.fetchError
+			//error: this.fetchError
 		});
 	},
 
 	fetchSuccess: function(collection, response) {
 		console.log('Cities Collection Fetch Success', response);
 		console.log('Cities Collection Models', collection.models);
-	},
-
-	fetchError: function(collection, response) {
-		throw new Error('Cities fetch error');
 	}
+
+	// fetchError: function(collection, response) {
+	// 	throw new Error('Cities fetch error');
+	// }
 });

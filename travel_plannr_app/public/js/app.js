@@ -11,6 +11,9 @@ $(function() {
 	App.cities = new App.Collections.CitiesCollection();
   App.itineraries = new App.Collections.ItinerariesCollection();
   App.users = new App.Collections.UsersCollection();
+  App.homepage = new App.Views.HomepageView();
+  App.citydetail = new App.Views.CityDetail(); //friday afternoon
+  App.cityitinerary = new App.Views.CityItineraryList(); //friday afternoon
 
   // Async issue
 
