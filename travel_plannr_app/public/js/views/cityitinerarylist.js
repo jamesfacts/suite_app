@@ -57,8 +57,6 @@ App.Views.CityItineraryList = Backbone.View.extend({
 
 		}.bind(this))
 
-		debugger;
-
 	}
 });
 
