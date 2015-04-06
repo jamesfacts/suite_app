@@ -18,12 +18,15 @@ App.Views.MainView = Backbone.View.extend({
 		'click #logo'					: 'showHome',
 		'click .user-name'		: 'showIndividualItinerary',
 		'click #back'					: 'showCityItinerary',
-    'click #edit'         : 'showEditItinerary'
+    'click #edit'         : 'showEditItinerary',
+    'click #save'         : 'executeSave'
 	},
 
 	showHome: function() { 
-		App.cityDetailView.hide();
-		App.cityItineraryView.hide();
+		if (App.cityDetailView) {App.cityDetailView.hide();};
+		if (App.cityItineraryView) {App.cityItineraryView.hide();};
+    if (App.individualItineraryView) {App.individualItineraryView.hide();};
+    if (App.editItineraryView) {App.editItineraryView.hide();};
 		App.homepage.show();
 	},
 
@@ -56,7 +59,8 @@ App.Views.MainView = Backbone.View.extend({
 
   showIndividualItinerary: function(userClicked) {
   	App.clickedItineraryId = parseInt(userClicked.target.closest('li').dataset.itineraryId);
-  	App.clickedItineraryUser = userClicked.target.innerHTML;
+  	
+    App.clickedItineraryUser = userClicked.target.innerHTML;
 
   	App.cityItineraryView.hide();
 
@@ -69,8 +73,14 @@ App.Views.MainView = Backbone.View.extend({
     App.individualItineraryView.hide();
 
     if(!App.editItineraryView) { App.editItineraryView = new App.Views.EditItineraryView(); };
-    App.editItineraryView.buildExistingStops();
 
+    App.editItineraryView.retrieveAllStops();
+  },
+
+  executeSave: function() {
+    App.editItineraryView.save();
+    App.editItineraryView.hide();
+     
   }
 
 });

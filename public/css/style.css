@@ -80,7 +80,22 @@ ul {
   margin: 7px;
 }
 
+.delete-stop, 
+.add-stop {
+	float: right;
+}
 
+.delete-stop {
+	color: red;
+}
+
+.add-stop {
+	color: blue;
+}
+
+.stop-name {
+	display: inline;
+}
 
 
 

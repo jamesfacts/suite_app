@@ -137,8 +137,15 @@
   		<h2> {{userName}}'s Itinerary:</h2> 
 	  		<ul class="itinerary-stops">
 					{{#each stop}}
-				  <li data-g-stop-id='{{g_stop_id}}' class='single-stop'>
-						<a href="#"><span class='stop-name'>{{name}}<span class='delete-stop'>[-]</span></span></a>
+				  <li data-g-stop-id='{{g_place_id}}' class='single-stop'>
+						<a href="#">
+							<p class='stop-name'>{{name}}</p>
+								{{#if saved}}
+									<span class='delete-stop'>[-]</span>
+								{{else}}
+									<span class='add-stop'>[+]</span>
+								{{/if}}
+						</a>
 				  </li>
 				  {{/each}}
 				</ul>
