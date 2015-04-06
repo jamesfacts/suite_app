@@ -57,6 +57,17 @@
       <input type="text" id="search-input" placeholder="Please Enter a City">
       <button id="search-button">Jet Set</button>
     </div>
+    <div id='map-random'>
+      <iframe
+			  width="520"
+			  height="500"
+			  margin-left="auto"
+			  margin-right="auto"
+			  frameborder="0" style="border:0"
+			  src="https://www.google.com/maps/embed/v1/place?key=AIzaSyDTdWH_EerYdX8b0lI15YmQFAjEzthwEX4
+			    &q=GLatLng(-90 + 180 * Math.random(), -180 + 360 * Math.random());">
+			</iframe>
+		</div>	
   </template>   
 
   <template id='city-detail-template'>

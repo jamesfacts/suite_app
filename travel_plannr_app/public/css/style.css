@@ -21,6 +21,7 @@ a {
 #homepage-view {
 	margin-left: 100px;
 	border: 1px solid;
+	width: 520px;
 }
 
 #city-detail-container {
