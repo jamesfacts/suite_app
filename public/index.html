@@ -13,6 +13,7 @@
   <script src='js/views/cityitinerarylist.js'></script>
   <script src="js/views/citydetailview.js"></script>
   <script src="js/views/individualitineraryview.js"></script>
+  <script src="js/views/edititineraryview.js"></script>
 
 
 	<!-- Models -->
@@ -121,13 +122,28 @@
   		<h2> {{userName}}'s Itinerary:</h2> 
 	  		<ul class="itinerary-stops">
 					{{#each stop}}
-				  <li data-g-stop-id='{{g_stop_id}}'>
+				  <li data-g-stop-id='{{g_stop_id}}' class='single-stop'>
 						<a href="#"><span class='stop-name'>{{name}}</span></a>
 				  </li>
 				  {{/each}}
 				</ul>
 				<button id='edit'>Edit Itinerary</button>
 				<button id='back'>Return To All Itineraries</button>
+  	</div>
+  </template>
+
+  <template id='edit-itinerary-template'>
+  	<div id='edit-itinerary-container'>
+  		<h2> {{userName}}'s Itinerary:</h2> 
+	  		<ul class="itinerary-stops">
+					{{#each stop}}
+				  <li data-g-stop-id='{{g_stop_id}}' class='single-stop'>
+						<a href="#"><span class='stop-name'>{{name}}<span class='delete-stop'>[-]</span></span></a>
+				  </li>
+				  {{/each}}
+				</ul>
+				<button id='save'>Save Itinerary</button>
+				<button id='discard'>Discard Changes</button>
   	</div>
   </template>
 
