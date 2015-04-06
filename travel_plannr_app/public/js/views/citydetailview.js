@@ -17,23 +17,19 @@ App.Views.CityDetailView = Backbone.View.extend({
 			url: '/city-info/' + placeid,
 			method: 'GET'
 		}).done(this.render.bind(this));
-		// there's a better way to do this?...
 	},
-
 
 	render: function(cityInfo) {
 		this.$el.html(this.template(cityInfo));
 	},
 
 	show: function () {
+		this.$el.show();
 		this.model = App.cities.findWhere({g_city_id: App.currentCity});
 		this.getCityInfo();
-		this.$el.show();
 	},
 
 	hide: function () {
 		this.$el.hide();
 	}
-
-
 });

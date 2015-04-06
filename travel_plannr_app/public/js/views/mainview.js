@@ -16,8 +16,8 @@ App.Views.MainView = Backbone.View.extend({
 	events: {
 		'click #search-button': 'executeSearch',
 		'click #logo'					: 'showHome',
-		'click .user-name'		: 'itineraryView',
-		'click #back'					: 'allItineraries'
+		'click .user-name'		: 'showIndividualItinerary',
+		'click #back'					: 'showCityItinerary'
 	},
 
 	showHome: function() { 
@@ -33,35 +33,35 @@ App.Views.MainView = Backbone.View.extend({
           url: '/return_place_id/:' + userInput,
           method: 'GET',
           dataType: 'json'
-      }).done(function(placeid) {
+      }).done(function (placeid) {
           App.currentCity = placeid.place_id;
 
           App.homepage.hide();
 
-          App.cityDetailView = new App.Views.CityDetailView(); 
+          if (!App.cityDetailView) { App.cityDetailView = new App.Views.CityDetailView(); };
 
-          App.cityItineraryView = new App.Views.CityItineraryView();
-      		App.cityItineraryView.getCity();
-
-      		App.cityDetailView.show();
+          if (!App.cityItineraryView) { App.cityItineraryView = new App.Views.CityItineraryView(); };
+          
+          App.cityDetailView.show();
+      		App.cityItineraryView.show();
 
       		});
   },
 
-  allItineraries: function () {
-  	alert('yo');
+  showCityItinerary: function () {
   	App.individualItineraryView.hide();
   	App.cityItineraryView.show();
   },
 
-  itineraryView: function(userClicked) {
+  showIndividualItinerary: function(userClicked) {
   	App.clickedItineraryId = parseInt(userClicked.target.closest('li').dataset.itineraryId);
   	App.clickedItineraryUser = userClicked.target.innerHTML;
 
   	App.cityItineraryView.hide();
-  	App.individualItineraryView = new App.Views.IndividualItineraryView();
-  	App.individualItineraryView.getItinerary();
 
+  	if(!App.individualItineraryView) { App.individualItineraryView = new App.Views.IndividualItineraryView(); };
+  	
+    App.individualItineraryView.getItinerary();
   }
 
 });

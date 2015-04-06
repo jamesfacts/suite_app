@@ -1,14 +1,14 @@
 App.Views.IndividualItineraryView = Backbone.View.extend({
-	el: '#city-itinerary-view',
+	el: '#individual-itinerary',
 
 	initialize: function () {
 		this.collection = new App.Collections.IndividualItineraryCollection();
-
 		this.template = Handlebars.compile( $('#user-itinerary-template').html() );
 		this.listenTo(this.collection, 'sync', this.buildStops);
 	},
 
 	getItinerary: function () {
+		this.collection.reset();
 		this.collection.fetch();
 	},
 
@@ -33,6 +33,7 @@ App.Views.IndividualItineraryView = Backbone.View.extend({
 
 	render: function (renderData) {
 		this.$el.html( this.template(renderData)  );
+		
 		this.show();
 	},
 
@@ -41,9 +42,7 @@ App.Views.IndividualItineraryView = Backbone.View.extend({
 	},
 
 	hide: function() {
-		debugger;
 		this.$el.hide();
 	}
-
 
 });

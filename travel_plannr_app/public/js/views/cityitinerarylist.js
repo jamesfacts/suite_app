@@ -6,7 +6,7 @@
 
 App.Views.CityItineraryView = Backbone.View.extend({
 
-	el: '#city-itinerary-view',
+	el: '#city-itinerary-list',
 
 	initialize: function(){
 		this.collection = new App.Collections.CityItineraryCollection();
@@ -47,13 +47,12 @@ App.Views.CityItineraryView = Backbone.View.extend({
 	},
 
 	render: function() {
-		// **** WHY?!?!?! WHY?!?!?!?!?!?!?!?!
-
 		var renderData = {itinerary: this.collection.models};
 		this.$el.html(this.template( renderData ));
 	},
 
 	show: function() {
+		this.getCity();
 		this.$el.show();
 	},
 
