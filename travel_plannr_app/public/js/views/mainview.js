@@ -17,7 +17,8 @@ App.Views.MainView = Backbone.View.extend({
 		'click #search-button': 'executeSearch',
 		'click #logo'					: 'showHome',
 		'click .user-name'		: 'showIndividualItinerary',
-		'click #back'					: 'showCityItinerary'
+		'click #back'					: 'showCityItinerary',
+    'click #edit'         : 'showEditItinerary'
 	},
 
 	showHome: function() { 
@@ -62,6 +63,14 @@ App.Views.MainView = Backbone.View.extend({
   	if(!App.individualItineraryView) { App.individualItineraryView = new App.Views.IndividualItineraryView(); };
   	
     App.individualItineraryView.getItinerary();
+  },
+
+  showEditItinerary: function() {
+    App.individualItineraryView.hide();
+
+    if(!App.editItineraryView) { App.editItineraryView = new App.Views.EditItineraryView(); };
+    App.editItineraryView.buildExistingStops();
+
   }
 
 });

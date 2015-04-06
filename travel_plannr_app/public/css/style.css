@@ -35,7 +35,8 @@ a {
 }
 
 #city-itinerary-container, 
-#user-itinerary-container {
+#user-itinerary-container,
+#edit-itinerary-container {
 	float: left;
 	border: 1px solid;
 	width: 38%;
@@ -65,11 +66,19 @@ a {
 	background-color: hsla(50, 0%, 100%, 1.0);
 }
 
-.itinerary-items {
+ul {
 	list-style-type: none;
 }
 
+.itinerary-stops {
+	padding-left: 0;
+}
 
+.single-stop {
+	padding: 10px;
+  border: 1px solid;
+  margin: 7px;
+}
 
 
 
