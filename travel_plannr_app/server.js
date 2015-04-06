@@ -7,7 +7,7 @@ var application_root = __dirname,
     request          = require('request'),
     GooglePlaces		 = require('googleplaces');
 
-var GOOGLE_PLACES_API_KEY = "";
+var GOOGLE_PLACES_API_KEY = "AIzaSyDTdWH_EerYdX8b0lI15YmQFAjEzthwEX4";
 var GOOGLE_PLACES_OUTPUT_FORMAT = "json";
 
 var googlePlaces = new GooglePlaces(GOOGLE_PLACES_API_KEY, 
@@ -109,7 +109,7 @@ app.get('/itineraries/:id', function(req, res) {
 			include: [Stop]
 		})
 		.then(function(itineraryStops) {
-			res.send(itineraryStops);
+			res.send(itineraryStops.stops);
 		});
 });
 
@@ -153,22 +153,6 @@ app.get('/cities', function(req, res) {
 		.then(function(cities) {
 			res.send(cities);
 		});
-});
-
-app.get('/return_place_id/:place_text', function(req, res) {
-
-// get request to google places API for place_id
-var placeIdRoot = 'https://maps.googleapis.com/maps/api/place/textsearch/json?query=';
-var cityName = encodeURI(req.params.place_text);
-var apiKey = '&key=';
-
-var queryUrl = placeIdRoot + cityName + apiKey;
-	request.get(queryUrl, function (error, response, body) {
-		if (!error && response.statusCode == 200) {
-			var data = JSON.parse(response.body);
-			res.send({place_id: data.results[0].place_id});
-		}
-	});
 });
 
 //show
@@ -272,20 +256,19 @@ app.delete('/stops/:id', function(req, res) {
 });
 
 
+
+// ================= Google API  =================
+
+
 app.get('/city-info/:placeid', function (req, res) {
 
-	var idParameters = {
-	  placeid: req.params.placeid
-	};
+	var idParameters = { placeid: req.params.placeid };
 
 	var data = {};
+	data.attractions = [];
 
 	googlePlaces.placeDetailsRequest(idParameters, function (error, response) {
 	  if (error) throw error;
-	  
-	  console.log("//////////////////////////////");
-	  console.log(response);
-	  console.log("//////////////////////////////");
 
 	  data.name = response.result.formatted_address;
 	  data.location = { location: [response.result.geometry.location.lat,
@@ -294,10 +277,7 @@ app.get('/city-info/:placeid', function (req, res) {
 	  googlePlaces.placeSearch(data.location, function (error, response) {
 		  if (error) throw error;
 
-		  data.attractions = [];
-
 		  response.results.forEach(function (result) {
-
 			  												var attraction = {
 			  													name: result.name,
 			  													g_place_id: result.place_id,
@@ -306,22 +286,30 @@ app.get('/city-info/:placeid', function (req, res) {
 			  												};
 
 			  												data.attractions.push(attraction);
-
 		  												});
-
-
-
 		  res.send(data);
 		})
-	  	
-
+	 
 		});
-
-
 
 });
 
+// get request to google places API for place_id
 
+app.get('/return_place_id/:place_text', function(req, res) {
+
+	var placeIdRoot = 'https://maps.googleapis.com/maps/api/place/textsearch/json?query=';
+	var cityName = encodeURI(req.params.place_text);
+	var apiKey = '&key=' + GOOGLE_PLACES_API_KEY;
+
+	var queryUrl = placeIdRoot + cityName + apiKey;
+		request.get(queryUrl, function (error, response, body) {
+			if (!error && response.statusCode == 200) {
+				var data = JSON.parse(response.body);
+				res.send({place_id: data.results[0].place_id});
+			}
+		});
+});
 
 
 

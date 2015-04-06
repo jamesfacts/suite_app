@@ -1,0 +1,86 @@
+body {
+	font-family: Helvetica;
+	background: url(http://subtlepatterns.com/patterns/congruent_pentagon.png);
+}
+
+h1 {
+	font-family: 'Damion', cursive;
+	font-size: 4em;
+	margin-left: 100px;
+}
+
+h1:hover {
+	color: hsla(223, 88%, 56%, 1.0);
+}
+
+a {
+	text-decoration: none;
+	color: inherit; 
+}
+
+#homepage-view {
+	margin-left: 100px;
+	border: 1px solid;
+}
+
+#city-detail-container {
+	float: left;
+	border: 1px solid;
+	width: 38%;
+	margin-left: 100px;
+  padding: 10px;
+  background: url(http://subtlepatterns.com/patterns/concrete_wall_2.png);
+  overflow: scroll;
+}
+
+#city-itinerary-container, 
+#user-itinerary-container {
+	float: left;
+	border: 1px solid;
+	width: 38%;
+	margin-left: 40px;
+  padding: 10px;
+  background: url(http://subtlepatterns.com/patterns/concrete_wall_2.png);
+  overflow: scroll;
+}
+
+.attraction-type {
+	display: inline-block;
+	width: 100%;
+	padding-left: 27px;
+  padding-bottom: 10px;
+  font-style: italic;
+}
+
+.user-name {
+  display: inline-block;
+  width: 85%;
+  background-color: hsla(50, 0%, 100%, .75);
+  margin-bottom: 14px;
+  padding: 10px;
+}
+
+.user-name:hover {
+	background-color: hsla(50, 0%, 100%, 1.0);
+}
+
+.itinerary-items {
+	list-style-type: none;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -2,11 +2,10 @@
 // you can have one function that encompasses 3 different functions
 
 
-App.Views.HomePageView = Backbone.View.extend({
+App.Views.HomepageView = Backbone.View.extend({
   el: '#homepage-view',
 
 	initialize: function() {
-		console.log('Home Page View has been created');
 		this.homepageTemplate = Handlebars.compile($('#homepage-view-template').html());
 		this.render();
 	},
@@ -15,11 +14,11 @@ App.Views.HomePageView = Backbone.View.extend({
 		this.$el.html(this.homepageTemplate());
 	},
 
-	// events: {
-	// 	'click #search-button': 'hideAndShow'
-	// },
+	hide: function() {
+		this.$el.hide();
+	},
 
-	// hideAndShow: function() {
-	// 	this.$el.hide();
-	// }
+	show: function() {
+		this.$el.show();
+	}
 });

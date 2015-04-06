@@ -8,9 +8,13 @@ var App = {
 $(function() {
 	console.log('Loaded, bro.');
 
+	// ============ collections ============
 	App.cities = new App.Collections.CitiesCollection();
   App.itineraries = new App.Collections.ItinerariesCollection();
   App.users = new App.Collections.UsersCollection();
+
+  // ============ main view ============
+  App.mainView = new App.Views.MainView();
 
   // Async issue
 
