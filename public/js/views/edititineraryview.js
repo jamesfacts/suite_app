@@ -2,7 +2,13 @@ App.Views.EditItineraryView = Backbone.View.extend({
     el: '#edit-itinerary',
 
     initialize: function () {
-        this.collection = App.individualItineraryView.collection;
+        if (App.Collections.stopsByUser) {
+            this.collection = App.Collections.stopsByUser
+        } else {
+            App.Collections.stopsByUser = new App.Collections.IndividualItineraryCollection();
+            this.collection = App.Collections.stopsByUser
+            };
+            
         this.template = Handlebars.compile( $('#edit-itinerary-template').html() );
         // this.listenTo(this.collection, 'add', this.addStop);
         // this.listenTo(this.collection, 'remove', this.deleteStop)

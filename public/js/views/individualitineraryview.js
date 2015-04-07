@@ -2,7 +2,16 @@ App.Views.IndividualItineraryView = Backbone.View.extend({
 	el: '#individual-itinerary',
 
 	initialize: function () {
-		this.collection = new App.Collections.IndividualItineraryCollection();
+		console.log("I EXIST NOW!!!!!!!! AND MY NUMBER IS", App.clickedItineraryId);
+
+		if (App.Collections.stopsByUser) {
+			this.collection = App.Collections.stopsByUser
+		} else {
+			App.Collections.stopsByUser = new App.Collections.IndividualItineraryCollection();
+			this.collection = App.Collections.stopsByUser
+			};
+
+		//this.collection = new App.Collections.IndividualItineraryCollection();
 		this.template = Handlebars.compile( $('#user-itinerary-template').html() );
 		this.listenTo(this.collection, 'sync', this.buildStops);
 	},
