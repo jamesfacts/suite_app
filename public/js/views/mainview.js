@@ -80,6 +80,8 @@ App.Views.MainView = Backbone.View.extend({
   executeSave: function() {
     App.editItineraryView.save();
     App.editItineraryView.hide();
+
+    App.individualItineraryView.show();
      
   }
 

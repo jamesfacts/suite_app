@@ -46,10 +46,17 @@ App.Views.EditItineraryView = Backbone.View.extend({
         var cityId = App.clickedItineraryId;
 
         // -> delete everything from server
-        this.collection.forEach(function(singleStop){
-          debugger;
-          this.collection.get({ id: singleStop.id }).destroy();
-        }.bind(this));
+        // this.collection.forEach(function(singleStop){
+        //   debugger;
+        //   console.log(singleStop);
+        //   this.collection.get(singleStop.id).destroy();
+        // }.bind(this));
+
+        //var toDelete = this.collection.length;
+
+        for (var i = this.collection.length-1; i >= 0; i--) {
+            this.collection.models[i].destroy();
+        };
 
 
         //iterate through array and if 'saved === true'
@@ -101,6 +108,7 @@ App.Views.EditItineraryView = Backbone.View.extend({
         };
 
         this.$el.html( this.template(renderData)  );
+        this.show();
     },
 
     show: function() {

@@ -39,9 +39,10 @@
 <body>
   
   <div id="main-view">
-  	<a href="#"><h1 id="logo">Travel Plannr</h1></a>
+  	<a href="#"><div id='logo-div'><h1 id="logo">Travel Plannr</h1></div></a>
 
-	  <div id="homepage-view"></div>
+	  <div id="homepage-view">
+	  </div>
 
 	  <div id="login-modal"></div>
 
@@ -67,15 +68,15 @@
       <button id="search-button">Jet Set</button>
     </div>
     <div id='map-random'>
-      <iframe
+      <!--<iframe
 			  width="520"
 			  height="500"
 			  margin-left="auto"
 			  margin-right="auto"
 			  frameborder="0" style="border:0"
 			  src="https://www.google.com/maps/embed/v1/place?key=AIzaSyDTdWH_EerYdX8b0lI15YmQFAjEzthwEX4
-			    &q=GLatLng(-90 + 180 * Math.random(), -180 + 360 * Math.random());">
-			</iframe>
+			    &q=GLatLng({{lat}}, {{lng}})">
+			</iframe>-->
 		</div>	
   </template>   
 
@@ -83,15 +84,15 @@
   	<div id='city-detail-container'>
   		<h2>Your city:</h2> 
   		<h4>{{name}}</h4>
-  		<iframe
+  		<!--<iframe
 			  width="400"
 			  height="400"
 			  margin-left="auto"
 			  margin-right="auto"
 			  frameborder="0" style="border:0"
 			  src="https://www.google.com/maps/embed/v1/place?key=AIzaSyDTdWH_EerYdX8b0lI15YmQFAjEzthwEX4
-			    &q={{name}}">
-			</iframe>
+			    &q={{name}}"> 
+			</iframe>-->
 			<h4>Attractions:</h4>
 			<ul>
 				{{#each attractions}}
@@ -113,6 +114,9 @@
 						<a href="#"><span class='user-name'>{{attributes.user_name}}</span></a>
 				  </li>
 				  {{/each}}
+				  <li id='add-new-itinerary'>
+						<a href="#"><span class='user-name'>+ Add A New Itinerary</span></a>
+				  </li>
 				</ul>
   	</div>
   </template>
