@@ -49,7 +49,7 @@ App.Views.CityItineraryView = Backbone.View.extend({
 
 	getItineraries: function (cityKey) {
 		// this is an array of itinerary models with the specified city id
-		var itineraries = App.itineraries.where({ city_id: cityKey });
+		var itineraries = App.itineraries.where({ city_id: cityKey});
 
 		this.getUsers(itineraries);
 	},
