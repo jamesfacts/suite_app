@@ -17,8 +17,10 @@ App.Views.IndividualItineraryView = Backbone.View.extend({
 	},
 
 	getItinerary: function () {
-		this.collection.url = '../itineraries/' + App.clickedItineraryId;
-		this.collection.fetch();
+		if (App.clickedItineraryId != 0) {
+			this.collection.url = '../itineraries/' + App.clickedItineraryId;
+			this.collection.fetch();
+		}
 	},
 
 	buildStops: function () {

@@ -342,7 +342,19 @@ app.get('/city-stops/:place_id', function (req, res) {
 
 });
 
+// get ONLY name given placeid
 
+app.get('/city-name/:placeid', function (req, res) {
+	
+	var idParameters = { placeid: req.params.placeid };
+
+	googlePlaces.placeDetailsRequest(idParameters, function (error, response) {
+	  if (error) throw error;
+
+	  var name = response.result.formatted_address;
+	  res.send(name);
+	});
+});
 
 
 

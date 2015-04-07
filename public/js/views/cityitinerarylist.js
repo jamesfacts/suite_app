@@ -17,13 +17,39 @@ App.Views.CityItineraryView = Backbone.View.extend({
 	},
 
 	getCity: function () {
-		var cityKey = App.cities.findWhere({g_city_id: App.currentCity});
-		this.getItineraries(cityKey);
+
+		if (!App.cities.findWhere({g_city_id: App.currentCity})) 
+			{ 
+				this.addCity() 
+			}
+		else
+			{ 
+				var cityKey = App.cities.findWhere({g_city_id: App.currentCity});
+				cityKey = cityKey.id;
+				this.getItineraries(cityKey);
+			}
+	},
+
+	addCity: function () {
+
+		$.ajax({
+			url: '/city-name/' + App.currentCity,
+			method: 'GET',
+		}).done(function(cityName) {
+			App.cities.create({
+				name: cityName,
+				g_city_id: App.currentCity
+			}, { success: function() {
+										App.currentCityId = App.cities.last().id
+										} });
+		});
+
+		this.getItineraries(App.currentCityId);
 	},
 
 	getItineraries: function (cityKey) {
 		// this is an array of itinerary models with the specified city id
-		var itineraries = App.itineraries.where({ city_id: cityKey.id });
+		var itineraries = App.itineraries.where({ city_id: cityKey });
 
 		this.getUsers(itineraries);
 	},

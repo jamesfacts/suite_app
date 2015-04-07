@@ -109,15 +109,19 @@ App.Views.MainView = Backbone.View.extend({
 
   newUserItinerary: function() {
     var newUserId = App.users.last().id;
-    var cityId = App.cityDetailView.model.id;
+    //console.log("the current user ID is ", newUserId);
+    debugger;
+    var cityId = App.currentCityId;
+    //console.log("the current city ID is ", cityId);
 
     data = {user_id: newUserId, city_id: cityId};
 
-    App.itineraries.create(data, {wait: true});
+    App.itineraries.create(data, { success: function() {
 
-    App.clickedItineraryId = App.itineraries.last().id;
-    App.individualItineraryView.getItinerary();
-    this.showEditItinerary();
+      App.clickedItineraryId = App.itineraries.last().id;
+      App.individualItineraryView.getItinerary();
+      App.mainView.showEditItinerary();
+    }});
   }
 
 });
