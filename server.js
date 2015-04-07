@@ -114,19 +114,16 @@ app.get('/itineraries/:id', function(req, res) {
 });
 
 //create
-app.post('/users/:id/itineraries', function(req, res) {
-	var userId = req.params.id;
-	var itineraryData = req.body;
-	User
-		.findOne(userId)
-		.then(function(user){
-			Itinerary
-				.create(itineraryData)
-				.then(function(newItinerary){
-					user.addItinerary(newItinerary);
-					res.send(newItinerary);
-				});
-		});
+app.post('/itineraries', function(req, res) {
+	var data = req.body;
+	//var cityId = req.body.city_id;
+
+	Itinerary
+		.create(data)
+		.then(function(newItinerary){
+			console.log(newItinerary);
+			res.send(newItinerary);
+	});
 });
 
 //delete
