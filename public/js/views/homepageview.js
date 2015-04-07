@@ -7,11 +7,34 @@ App.Views.HomepageView = Backbone.View.extend({
 
 	initialize: function() {
 		this.homepageTemplate = Handlebars.compile($('#homepage-view-template').html());
-		this.render();
+		this.randomLocation();
 	},
 
-	render: function() {
-		this.$el.html(this.homepageTemplate());
+	randomLocation: function () {
+
+		var numUpToOneHundo = function() {
+    return (Math.random() * 100) 
+		}
+
+		var posOrNeg = function() {
+		    if (Math.random() > .5)
+		        {return -1}
+		    else
+		        {return 1}
+		};
+
+		var lat = Math.floor((numUpToOneHundo() * posOrNeg()));
+		var lng = Math.floor((numUpToOneHundo() * posOrNeg()));
+
+		var coordinates = {lat: lat,
+											 lng: lng};
+
+		this.render(coordinates);
+	},
+
+	render: function(coordinates) {
+
+		this.$el.html(this.homepageTemplate(coordinates));
 	},
 
 	hide: function() {
@@ -19,6 +42,58 @@ App.Views.HomepageView = Backbone.View.extend({
 	},
 
 	show: function() {
+		this.randomLocation();
 		this.$el.show();
 	}
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

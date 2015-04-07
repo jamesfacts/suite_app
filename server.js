@@ -114,19 +114,16 @@ app.get('/itineraries/:id', function(req, res) {
 });
 
 //create
-app.post('/users/:id/itineraries', function(req, res) {
-	var userId = req.params.id;
-	var itineraryData = req.body;
-	User
-		.findOne(userId)
-		.then(function(user){
-			Itinerary
-				.create(itineraryData)
-				.then(function(newItinerary){
-					user.addItinerary(newItinerary);
-					res.send(newItinerary);
-				});
-		});
+app.post('/itineraries', function(req, res) {
+	var data = req.body;
+	//var cityId = req.body.city_id;
+
+	Itinerary
+		.create(data)
+		.then(function(newItinerary){
+			console.log(newItinerary);
+			res.send(newItinerary);
+	});
 });
 
 //delete
@@ -213,9 +210,11 @@ app.get('/stops', function(req, res) {
 });
 
 //create
-app.post('/itineraries/:id/stops', function(req, res) {
+app.post('/itineraries/:id', function(req, res) {
 	var itineraryId = req.params.id;
 	var stopData = req.body;
+
+//	res.send(req.body);
 
 	Itinerary
 		.findOne(itineraryId)
@@ -243,9 +242,9 @@ app.put('/stops/:id', function(req, res) {
 });
 
 //delete
-app.delete('/stops/:id', function(req, res) {
+app.delete('/itineraries/:itinerary_id/:stop_id', function(req, res) {
 	Stop
-		.findOne(req.params.id)
+		.findOne(req.params.stop_id)
 		.then(function(stop) {
 			stop
 				.destroy()
@@ -259,7 +258,7 @@ app.delete('/stops/:id', function(req, res) {
 
 // ================= Google API  =================
 
-
+// Get ALL city details
 app.get('/city-info/:placeid', function (req, res) {
 
 	var idParameters = { placeid: req.params.placeid };
@@ -295,7 +294,6 @@ app.get('/city-info/:placeid', function (req, res) {
 });
 
 // get request to google places API for place_id
-
 app.get('/return_place_id/:place_text', function(req, res) {
 
 	var placeIdRoot = 'https://maps.googleapis.com/maps/api/place/textsearch/json?query=';
@@ -312,9 +310,51 @@ app.get('/return_place_id/:place_text', function(req, res) {
 });
 
 
+// get ONLY attractions
 
+app.get('/city-stops/:place_id', function (req, res) {
 
+	var idParameters = { placeid: req.params.place_id };
 
+	var attractions = [];
+
+	googlePlaces.placeDetailsRequest(idParameters, function (error, response) {
+	  if (error) throw error;
+
+	  var location = { location: [response.result.geometry.location.lat,
+	  						                 response.result.geometry.location.lng] };
+
+	  googlePlaces.placeSearch(location, function (error, response) {
+		  if (error) throw error;
+
+		  response.results.forEach(function (result) {
+			  												var attraction = {
+			  													name: result.name,
+			  													g_place_id: result.place_id
+			  												};
+
+			  												attractions.push(attraction);
+		  												});
+		  res.send(attractions);
+		})
+	 
+		});
+
+});
+
+// get ONLY name given placeid
+
+app.get('/city-name/:placeid', function (req, res) {
+	
+	var idParameters = { placeid: req.params.placeid };
+
+	googlePlaces.placeDetailsRequest(idParameters, function (error, response) {
+	  if (error) throw error;
+
+	  var name = response.result.formatted_address;
+	  res.send(name);
+	});
+});
 
 
 

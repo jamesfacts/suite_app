@@ -1,12 +1,25 @@
+#search-input{
+	width: 340px;
+	margin-bottom: 25px;
+}
+
 body {
 	font-family: Helvetica;
 	background: url(http://subtlepatterns.com/patterns/congruent_pentagon.png);
+}
+
+#logo-div {
+	width: 98%;
+	display: block;
+  height: 189px;
 }
 
 h1 {
 	font-family: 'Damion', cursive;
 	font-size: 4em;
 	margin-left: 100px;
+	display: inline;
+  float: left;
 }
 
 h1:hover {
@@ -20,7 +33,7 @@ a {
 
 #homepage-view {
 	margin-left: 100px;
-	border: 1px solid;
+	/*border: 1px solid;*/
 	width: 520px;
 }
 
@@ -41,6 +54,7 @@ a {
 	border: 1px solid;
 	width: 38%;
 	margin-left: 40px;
+	margin-bottom: 500px;
   padding: 10px;
   background: url(http://subtlepatterns.com/patterns/concrete_wall_2.png);
   overflow: scroll;
@@ -80,7 +94,22 @@ ul {
   margin: 7px;
 }
 
+.delete-stop, 
+.add-stop {
+	float: right;
+}
 
+.delete-stop {
+	color: red;
+}
+
+.add-stop {
+	color: blue;
+}
+
+.stop-name {
+	display: inline;
+}
 
 
 

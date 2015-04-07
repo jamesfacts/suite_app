@@ -11,6 +11,8 @@ App.Views.MainView = Backbone.View.extend({
 
 	initialize: function() {
 		App.homepage = new App.Views.HomepageView();
+    //hacky fix below
+    App.clickedItineraryId = 0;
 	},
 
 	events: {
@@ -18,17 +20,23 @@ App.Views.MainView = Backbone.View.extend({
 		'click #logo'					: 'showHome',
 		'click .user-name'		: 'showIndividualItinerary',
 		'click #back'					: 'showCityItinerary',
-    'click #edit'         : 'showEditItinerary'
+    'click #edit'         : 'showEditItinerary',
+    'click #save'         : 'executeSave',
+    'click #add-new-itinerary' : 'showAddItinerary',
+    'click #return'       :  'returnFromAdd'
 	},
 
 	showHome: function() { 
-		App.cityDetailView.hide();
-		App.cityItineraryView.hide();
+		if (App.cityDetailView) {App.cityDetailView.hide();};
+		if (App.cityItineraryView) {App.cityItineraryView.hide();};
+    if (App.individualItineraryView) {App.individualItineraryView.hide();};
+    if (App.editItineraryView) {App.editItineraryView.hide();};
 		App.homepage.show();
 	},
 
   executeSearch: function() {
   		userInput = encodeURI( $('#search-input').val() );
+      this.listenTo(App.users, 'add', this.newUserItinerary);
 
       $.ajax({
           url: '/return_place_id/:' + userInput,
@@ -56,7 +64,8 @@ App.Views.MainView = Backbone.View.extend({
 
   showIndividualItinerary: function(userClicked) {
   	App.clickedItineraryId = parseInt(userClicked.target.closest('li').dataset.itineraryId);
-  	App.clickedItineraryUser = userClicked.target.innerHTML;
+  	
+    App.clickedItineraryUser = userClicked.target.innerHTML;
 
   	App.cityItineraryView.hide();
 
@@ -66,11 +75,53 @@ App.Views.MainView = Backbone.View.extend({
   },
 
   showEditItinerary: function() {
-    App.individualItineraryView.hide();
+    
+    // clickedItineraryId = App.users.last().id
+
+    if(App.individualItineraryView) { App.individualItineraryView.hide(); };
+    if(App.addItineraryView) {App.addItineraryView.hide();};
 
     if(!App.editItineraryView) { App.editItineraryView = new App.Views.EditItineraryView(); };
-    App.editItineraryView.buildExistingStops();
 
+    App.editItineraryView.retrieveAllStops();
+  },
+
+  executeSave: function() {
+    App.editItineraryView.save();
+    App.editItineraryView.hide();
+
+    App.individualItineraryView.show();
+     
+  },
+
+  showAddItinerary: function() {
+    App.cityItineraryView.hide();
+
+    if (!App.addItineraryView) {App.addItineraryView = new App.Views.AddItineraryView();};
+
+    App.addItineraryView.show();
+  },
+
+  returnFromAdd: function() {
+    App.addItineraryView.hide();
+    App.cityItineraryView.show();
+  },
+
+  newUserItinerary: function() {
+    var newUserId = App.users.last().id;
+    //console.log("the current user ID is ", newUserId);
+    debugger;
+    var cityId = App.currentCityId;
+    //console.log("the current city ID is ", cityId);
+
+    data = {user_id: newUserId, city_id: cityId};
+
+    App.itineraries.create(data, { success: function() {
+
+      App.clickedItineraryId = App.itineraries.last().id;
+      App.individualItineraryView.getItinerary();
+      App.mainView.showEditItinerary();
+    }});
   }
 
 });
